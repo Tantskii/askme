@@ -9,6 +9,11 @@ class User < ApplicationRecord
 
   validates :email, :username, presence: true
   validates :email, :username, uniqueness: true
+  validates :username, length: {maximum: 40}
+  validates :username, format: { with: /\A[a-zA-Z0-9_]+\z/,
+                                    message: 'is invalid' }
+  validates :email, format: { with: /\A([\w+\-].?)+@[a-z\d\-]+(\.[a-z]+)*\.[a-z]+\z/i,
+                                    message: 'is invalid' }
 
   attr_accessor :password
 
@@ -16,6 +21,7 @@ class User < ApplicationRecord
   validates_confirmation_of :password
 
   before_save :encrypt_password
+  before_save :downcase_username
 
   def encrypt_password
     self.password_salt =
@@ -49,5 +55,9 @@ class User < ApplicationRecord
     else
       nil
     end
+  end
+
+  def downcase_username
+    self.username = self.username.downcase
   end
 end
