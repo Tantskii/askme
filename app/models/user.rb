@@ -20,8 +20,7 @@ class User < ApplicationRecord
   validates_presence_of :password, on: :create
   validates_confirmation_of :password
 
-  before_save :encrypt_password
-  before_save :downcase_username
+  before_save :encrypt_password, :downcase_username
 
   def encrypt_password
     self.password_salt =
