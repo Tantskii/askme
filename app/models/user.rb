@@ -8,12 +8,10 @@ class User < ApplicationRecord
   has_many :questions
 
   validates :email, :username, presence: true
-  validates :email, :username, uniqueness: true
+  validates :email, :username, uniqueness: {case_sensitive: false}
   validates :username, length: {maximum: 40}
-  validates :username, format: { with: /\A[a-zA-Z0-9_]+\z/,
-                                    message: 'is invalid' }
-  validates :email, format: { with: /\A([\w+\-].?)+@[a-z\d\-]+(\.[a-z]+)*\.[a-z]+\z/i,
-                                    message: 'is invalid' }
+  validates :username, format: {with: /\A[a-zA-Z0-9_]+\z/}
+  validates :email, format: {with: /\A([\w+\-].?)+@[a-z\d\-]+(\.[a-z]+)*\.[a-z]+\z/i}
 
   attr_accessor :password
 
@@ -27,7 +25,7 @@ class User < ApplicationRecord
         User.hash_to_string(OpenSSL::Random.random_bytes(16))
 
     self.password_hash = User.hash_to_string(
-        OpenSSL::PKCS5.pbkdf2_hmac(self.password,
+                           OpenSSL::PKCS5.pbkdf2_hmac(self.password,
                                    self.password_salt,
                                    ITERATIONS,
                                    DIGEST.length,
@@ -50,6 +48,7 @@ class User < ApplicationRecord
                                        DIGEST.length,
                                        DIGEST)
         )
+
       user
     else
       nil
