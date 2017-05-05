@@ -8,7 +8,7 @@ class User < ApplicationRecord
   has_many :questions
 
   validates :email, :username, presence: true
-  validates :email, :username, uniqueness: {case_sensitive: false}
+  validates :email, :username, uniqueness: true
   validates :username, length: {maximum: 40}
   validates :username, format: {with: /\A[a-zA-Z0-9_]+\z/}
   validates :email, format: {with: /\A([\w+\-].?)+@[a-z\d\-]+(\.[a-z]+)*\.[a-z]+\z/i}
@@ -18,14 +18,19 @@ class User < ApplicationRecord
   validates_presence_of :password, on: :create
   validates_confirmation_of :password
 
-  before_save :encrypt_password, :downcase_username
+  before_validation do
+    self.username = self.username.downcase
+    self.email    = self.email.downcase
+  end
+
+  before_save :encrypt_password
 
   def encrypt_password
     self.password_salt =
         User.hash_to_string(OpenSSL::Random.random_bytes(16))
 
     self.password_hash = User.hash_to_string(
-                           OpenSSL::PKCS5.pbkdf2_hmac(self.password,
+        OpenSSL::PKCS5.pbkdf2_hmac(self.password,
                                    self.password_salt,
                                    ITERATIONS,
                                    DIGEST.length,
@@ -53,9 +58,5 @@ class User < ApplicationRecord
     else
       nil
     end
-  end
-
-  def downcase_username
-    self.username = self.username.downcase
   end
 end
