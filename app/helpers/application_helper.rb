@@ -3,7 +3,25 @@ module ApplicationHelper
     if user.avatar_url.present?
       user.avatar_url
     else
-      asset_path 'soos.png'
+      asset_path 'anon.png'
     end
+  end
+
+  def sklonenie(number, krokodil, krokodila, krokodilov)
+    if number == nil || !number.is_a?(Numeric)
+      number = 0
+    end
+
+    ostatok_first = number % 100
+
+    return krokodilov if (11..14).include?(ostatok_first)
+
+    ostatok_second = number % 10
+
+    return krokodil if ostatok_second == 1
+
+    return krokodila if (2..4).include?(ostatok_second)
+
+    return krokodilov if ostatok_second > 4 || ostatok_second == 0
   end
 end
