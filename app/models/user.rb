@@ -43,7 +43,7 @@ class User < ApplicationRecord
   end
 
   def self.authenticate(email, password)
-    user = find_by(email: email)
+    user = User.find_by(email: email)
 
     if user.present? && user.password_hash ==
         User.hash_to_string(
