@@ -28,4 +28,8 @@ module ApplicationHelper
   def fa_icon(icon_class)
     content_tag 'span', '', class: "fa fa-#{icon_class}"
   end
+
+  def author(question)
+    User.find(question.author_id)
+  end
 end

@@ -30,19 +30,19 @@ class QuestionsController < ApplicationController
   def destroy
     user = @question.user
     @question.destroy
-    redirect_to user_path(user), notice: 'Question was successfully destroyed.'
+    redirect_to user_path(user), notice: 'Вопрос был успешно удален'
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def load_question
-      @question = Question.find(params[:id])
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def load_question
+    @question = Question.find(params[:id])
+  end
 
-    # Only allow a trusted parameter "white list" through.
-    def question_params
-      params.require(:question).permit(:user_id, :text, :answer)
-    end
+  # Only allow a trusted parameter "white list" through.
+  def question_params
+    params.require(:question).permit(:user_id, :text, :answer, :author_id)
+  end
 
   def authorize_user
     reject_user unless @question.user == current_user
