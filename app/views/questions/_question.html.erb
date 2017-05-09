@@ -18,7 +18,7 @@
     </div>
 
     <div class="text-small buffer-top-small">
-      <% if question.author_id %>
+      <% if question.author_id.present? %>
         <%= link_to "@#{author(question).username}", user_path(author(question))%>
       <% else %>
         <%= "анонимный вопрос" %>

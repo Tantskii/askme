@@ -7,6 +7,14 @@ module ApplicationHelper
     end
   end
 
+  def user_color(user)
+    if user.color.present?
+      user.color
+    else
+      "#005a55"
+    end
+  end
+
   def sklonenie(number, krokodil, krokodila, krokodilov)
     if number == nil || !number.is_a?(Numeric)
       number = 0
