@@ -12,6 +12,7 @@ class User < ApplicationRecord
   validates :username, length: {maximum: 40}
   validates :username, format: {with: /\A[a-zA-Z0-9_]+\z/}
   validates :email, format: {with: /\A([\w+\-].?)+@[a-z\d\-]+(\.[a-z]+)*\.[a-z]+\z/i}
+  validates :color, format: {with: /\#([a-f]|[0-9]){6}/i}
 
   attr_accessor :password
 
@@ -23,7 +24,7 @@ class User < ApplicationRecord
     self.email    = self.email.downcase
   end
 
-  before_save :encrypt_password
+  before_save :encrypt_password, :check_color
 
   def encrypt_password
     if self.password != nil
