@@ -24,7 +24,7 @@ class User < ApplicationRecord
     self.email    = self.email.downcase
   end
 
-  before_save :encrypt_password, :check_color
+  before_save :encrypt_password
 
   def encrypt_password
     if self.password != nil
