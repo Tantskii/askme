@@ -30,7 +30,13 @@ class UsersController < ApplicationController
   end
 
   def update
-    if @user.update(user_params)
+    if user_params[:password] == ''
+      params_for_update = user_params_with_out_password
+    else
+      params_for_update = user_params
+    end
+
+    if @user.update(params_for_update)
       redirect_to user_path(@user), notice: 'Данные обновлены!'
     else
       render 'edit'
@@ -41,7 +47,6 @@ class UsersController < ApplicationController
     @questions = @user.questions.order(created_at: :desc)
 
     @new_question = @user.questions.build
-    @new_question[:author_id] = session[:user_id]
 
     @questions_count = @questions.count
     @answers_count = @questions.where.not(answer: nil).count
@@ -66,6 +71,10 @@ class UsersController < ApplicationController
   def user_params
     params.require(:user).permit(:email, :password, :password_confirmation,
                                  :name, :username, :avatar_url, :color)
+  end
+
+  def user_params_with_out_password
+    params.require(:user).permit(:email, :name, :username, :avatar_url, :color)
   end
 
   def authorize_user

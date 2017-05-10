@@ -9,6 +9,7 @@ class QuestionsController < ApplicationController
   # POST /questions
   def create
     @question = Question.new(question_params)
+    @question.author = current_user
 
     if @question.save
       redirect_to user_path(@question.user), notice: 'Вопрос успешно задан'
@@ -41,7 +42,7 @@ class QuestionsController < ApplicationController
 
   # Only allow a trusted parameter "white list" through.
   def question_params
-    params.require(:question).permit(:user_id, :text, :answer, :author_id)
+    params.require(:question).permit(:user_id, :text, :answer)
   end
 
   def authorize_user
