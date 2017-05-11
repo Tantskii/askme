@@ -12,7 +12,7 @@ class User < ApplicationRecord
   validates :username, length: {maximum: 40}
   validates :username, format: {with: /\A[a-zA-Z0-9_]+\z/}
   validates :email, format: {with: /\A([\w+\-].?)+@[a-z\d\-]+(\.[a-z]+)*\.[a-z]+\z/i}
-  validates :color, format: {with: /\#([a-f]|[0-9]){6}/i}
+  validates :color, format: {with: /\A\#([a-f0-9]){6}\z/i}
 
   attr_accessor :password
 
@@ -22,6 +22,7 @@ class User < ApplicationRecord
   before_validation do
     self.username = self.username.downcase
     self.email    = self.email.downcase
+    change_color_if_nil
   end
 
   before_save :encrypt_password
@@ -38,6 +39,12 @@ class User < ApplicationRecord
                                      DIGEST.length,
                                      DIGEST)
       )
+    end
+  end
+
+  def change_color_if_nil
+    if self.color.nil?
+      self.color = '#005a55'
     end
   end
 
