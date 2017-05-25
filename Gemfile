@@ -7,6 +7,8 @@ gem 'rails_12factor'
 
 gem 'uglifier'
 
+gem 'recaptcha', require: 'recaptcha/rails'
+
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
 

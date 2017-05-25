@@ -24,7 +24,9 @@
           </div>
       <% end %>
 
-      <div class="form-action">
+      <%= recaptcha_tags unless current_user.present? %>
+
+      <div class="form-action buffer-both">
         <%= f.submit 'Сохранить', class: 'button button-small button-dark' %>
         <%= link_to 'Вернуться', user_path(@question.user) %>
       </div>
