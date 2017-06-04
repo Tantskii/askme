@@ -1,5 +1,6 @@
 <div class="question">
   <div class="text-small">
-    <%= link_to "##{hashtag.name}", hashtag_path(hashtag) %>
+    <%= link_to "##{hashtag.name}", hashtag_path(hashtag),
+                html_options = {class: 'hashtag'} %>
   </div>
 </div>

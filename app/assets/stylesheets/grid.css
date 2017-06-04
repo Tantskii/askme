@@ -47,6 +47,11 @@
   width: 75%;
 }
 
+.column-main {
+  width: 100%;
+  text-align: center;
+}
+
 .column-1-4 {
   float: left;
   width: 25%;

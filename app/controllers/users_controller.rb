@@ -3,8 +3,14 @@ class UsersController < ApplicationController
   before_action :authorize_user, except: [:index, :create, :new, :show]
 
   def index
-    @users = User.all
+    @users    = User.all
     @hashtags = Hashtag.all
+
+    @hashtags_first  = []
+    @hashtags_second = []
+    @hashtags_third  = []
+
+    devide_into_three(@hashtags)
   end
 
   def new
@@ -49,8 +55,8 @@ class UsersController < ApplicationController
 
     @new_question = @user.questions.build
 
-    @questions_count = @questions.count
-    @answers_count = @questions.where.not(answer: nil).count
+    @questions_count  = @questions.count
+    @answers_count    = @questions.where.not(answer: nil).count
     @unanswered_count = @questions_count - @answers_count
   end
 
@@ -80,5 +86,18 @@ class UsersController < ApplicationController
 
   def authorize_user
     reject_user unless @user == current_user
+  end
+
+  def devide_into_three(hashtags)
+    hashtags.each_with_index do |hashtag, index|
+      case
+      when index % 3 == 0
+        @hashtags_first << hashtag
+      when index % 3 == 1
+        @hashtags_second << hashtag
+      when index % 3 == 2
+        @hashtags_third << hashtag
+      end
+    end
   end
 end
