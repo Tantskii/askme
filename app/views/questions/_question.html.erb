@@ -18,6 +18,10 @@
     </div>
 
     <div class="text-small buffer-top-small">
+      <%= used_hashtags(question) %>
+    </div>
+
+    <div class="text-small buffer-top-small">
       <% if question.author.present? %>
         <%= link_to "@#{question.author.username}", user_path(question.author) %>
       <% else %>

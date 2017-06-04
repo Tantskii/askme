@@ -10,4 +10,14 @@
       </div>
     </div>
   <% end %>
+
+  <div class="column-3-4 hashtag-list">
+    <div class="question buffer-both">
+      <div class="questions-list">
+        <% @hashtags.each do |hashtag| %>
+            <%= render partial: 'hashtags/hashtag', object: hashtag %>
+        <% end %>
+      </div>
+    </div>
+  </div>
 </div>
