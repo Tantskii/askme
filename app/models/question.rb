@@ -13,7 +13,7 @@ class Question < ApplicationRecord
   private
 
   def set_hashtags
-    hashtags = (self.text + self.answer.to_s).scan(Hashtag::REGEXP)
+    hashtags = (self.text + ' ' + self.answer.to_s).scan(Hashtag::REGEXP)
 
     self.hashtags.delete_all
 
