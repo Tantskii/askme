@@ -1,24 +1,9 @@
-# README
+# Приложение - клон ask.fm
+Позволяет задавать анонимные и не только вопросы, а также на них отвечать.
+Реализован функционал хэштегов.
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+# Ссылка на приложение на heroku
+https://plsaskme.herokuapp.com/
 
-Things you may want to cover:
-
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+# Установка
+Склонируйте данный гит репозиторий и залейте на heroku. 
